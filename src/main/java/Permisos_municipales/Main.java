@@ -60,7 +60,7 @@ public class Main {
         scanner.close();
     }
 
-    // Método para registrar ciudadanos
+
     public static void registrarCiudadano(Scanner scanner) {
         System.out.println("Ingrese el ID del ciudadano:");
         int id = scanner.nextInt();
@@ -79,7 +79,7 @@ public class Main {
         System.out.println("Ciudadano registrado correctamente.");
     }
 
-    // Método para registrar permisos
+
     public static void registrarPermiso(Scanner scanner) {
         System.out.println("Seleccione el tipo de permiso:");
         System.out.println("1. Negocio");
@@ -158,7 +158,7 @@ public class Main {
         System.out.println("Permiso registrado correctamente.");
     }
 
-    // Método para buscar permisos por tipo
+
     public static void buscarPermisosPorTipo(Scanner scanner) {
         System.out.println("Ingrese el tipo de permiso a buscar:");
         String tipo = scanner.nextLine();
@@ -171,7 +171,7 @@ public class Main {
         }
     }
 
-    // Método para buscar permisos por fecha de emisión
+
     public static void buscarPermisosPorFechaEmision(Scanner scanner) {
         System.out.println("Ingrese la fecha de emisión a buscar (formato dd/MM/yyyy):");
         String fechaEmisionStr = scanner.nextLine();
@@ -191,7 +191,7 @@ public class Main {
         }
     }
 
-    // Método para buscar permisos por fecha de vencimiento
+
     public static void buscarPermisosPorFechaVencimiento(Scanner scanner) {
         System.out.println("Ingrese la fecha de vencimiento a buscar (formato dd/MM/yyyy):");
         String fechaVencimientoStr = scanner.nextLine();
@@ -211,7 +211,7 @@ public class Main {
         }
     }
 
-    // Método para mostrar los datos de un permiso
+
     public static void mostrarDatosPermiso(PermisoMunicipal permiso) {
         System.out.println("ID: " + permiso.getId());
         System.out.println("Tipo: " + permiso.getTipo());
@@ -227,7 +227,7 @@ public class Main {
             System.out.println("Tamaño del local: " + negocioPermiso.getTamanoLocal());
             System.out.println("Cantidad de empleados: " + negocioPermiso.getCantidadEmpleados());
         }
-        // Si es un permiso de construcción, mostrar detalles específicos
+
         else if (permiso instanceof ConstruccionPermiso) {
             ConstruccionPermiso construccionPermiso = (ConstruccionPermiso) permiso;
             System.out.println("Tipo de construcción: " + construccionPermiso.getTipoConstruccion());
@@ -242,7 +242,7 @@ public class Main {
         }
     }
 
-    // Método para calcular la tarifa de un permiso
+
     public static String calcularTarifa(PermisoMunicipal permiso) {
         double tarifa = 0;
         if (permiso instanceof NegocioPermiso) {
