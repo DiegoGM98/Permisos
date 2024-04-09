@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class Main {
     private static List<Ciudadano> ciudadanos = new ArrayList<>();
     private static List<PermisoMunicipal> permisos = new ArrayList<>();
+
+    private static DecimalFormat decimalFormat = new DecimalFormat("#,###");
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -240,7 +243,7 @@ public class Main {
     }
 
     // Método para calcular la tarifa de un permiso
-    public static double calcularTarifa(PermisoMunicipal permiso) {
+    public static String calcularTarifa(PermisoMunicipal permiso) {
         double tarifa = 0;
         if (permiso instanceof NegocioPermiso) {
             NegocioPermiso negocioPermiso = (NegocioPermiso) permiso;
@@ -253,6 +256,7 @@ public class Main {
             EventoEspecialPermiso eventoPermiso = (EventoEspecialPermiso) permiso;
             tarifa = permiso.getCostoBase() + (eventoPermiso.getCantidadAsistentes() / 100) * 100000;
         }
-        return tarifa;
+        // Formatear la tarifa en pesos chilenos
+        return "$" + decimalFormat.format(tarifa);
     }
 }
