@@ -141,6 +141,7 @@ public class Main {
 
                 System.out.println("Ingrese la cantidad esperada de asistentes:");
                 int cantidadAsistentes = scanner.nextInt();
+                scanner.nextLine(); // Consumir el salto de línea
 
                 System.out.println("Ingrese las medidas de seguridad:");
                 String medidasSeguridad = scanner.nextLine();
@@ -161,7 +162,8 @@ public class Main {
 
         for (PermisoMunicipal permiso : permisos) {
             if (permiso.getTipo().equalsIgnoreCase(tipo)) {
-                System.out.println(permiso.getTipo());
+                System.out.println("Permiso encontrado:");
+                mostrarDatosPermiso(permiso);
             }
         }
     }
@@ -180,7 +182,8 @@ public class Main {
 
         for (PermisoMunicipal permiso : permisos) {
             if (permiso.getFechaEmision().equals(fechaEmision)) {
-                System.out.println(permiso.getTipo() + " - Fecha de emisión: " + fechaEmision);
+                System.out.println("Permiso encontrado:");
+                mostrarDatosPermiso(permiso);
             }
         }
     }
@@ -199,8 +202,57 @@ public class Main {
 
         for (PermisoMunicipal permiso : permisos) {
             if (permiso.getFechaVencimiento().equals(fechaVencimiento)) {
-                System.out.println(permiso.getTipo() + " - Fecha de vencimiento: " + fechaVencimiento);
+                System.out.println("Permiso encontrado:");
+                mostrarDatosPermiso(permiso);
             }
         }
+    }
+
+    // Método para mostrar los datos de un permiso
+    public static void mostrarDatosPermiso(PermisoMunicipal permiso) {
+        System.out.println("ID: " + permiso.getId());
+        System.out.println("Tipo: " + permiso.getTipo());
+        System.out.println("Fecha de emisión: " + permiso.getFechaEmision());
+        System.out.println("Fecha de vencimiento: " + permiso.getFechaVencimiento());
+        System.out.println("Costo base: " + permiso.getCostoBase());
+        System.out.println("Tarifa: " + calcularTarifa(permiso));
+
+        // Si es un permiso de negocio, mostrar detalles específicos
+        if (permiso instanceof NegocioPermiso) {
+            NegocioPermiso negocioPermiso = (NegocioPermiso) permiso;
+            System.out.println("Tipo de negocio: " + negocioPermiso.getTipoNegocio());
+            System.out.println("Tamaño del local: " + negocioPermiso.getTamanoLocal());
+            System.out.println("Cantidad de empleados: " + negocioPermiso.getCantidadEmpleados());
+        }
+        // Si es un permiso de construcción, mostrar detalles específicos
+        else if (permiso instanceof ConstruccionPermiso) {
+            ConstruccionPermiso construccionPermiso = (ConstruccionPermiso) permiso;
+            System.out.println("Tipo de construcción: " + construccionPermiso.getTipoConstruccion());
+            System.out.println("Metros cuadrados a construir: " + construccionPermiso.getMetrosCuadrados());
+        }
+        // Si es un permiso para evento especial, mostrar detalles específicos
+        else if (permiso instanceof EventoEspecialPermiso) {
+            EventoEspecialPermiso eventoPermiso = (EventoEspecialPermiso) permiso;
+            System.out.println("Tipo de evento especial: " + eventoPermiso.getTipoEvento());
+            System.out.println("Cantidad esperada de asistentes: " + eventoPermiso.getCantidadAsistentes());
+            System.out.println("Medidas de seguridad: " + eventoPermiso.getMedidasSeguridad());
+        }
+    }
+
+    // Método para calcular la tarifa de un permiso
+    public static double calcularTarifa(PermisoMunicipal permiso) {
+        double tarifa = 0;
+        if (permiso instanceof NegocioPermiso) {
+            NegocioPermiso negocioPermiso = (NegocioPermiso) permiso;
+            tarifa = permiso.getCostoBase() + (negocioPermiso.getTamanoLocal() * 150000) +
+                    (negocioPermiso.getCantidadEmpleados() * 20000);
+        } else if (permiso instanceof ConstruccionPermiso) {
+            ConstruccionPermiso construccionPermiso = (ConstruccionPermiso) permiso;
+            tarifa = permiso.getCostoBase() + (construccionPermiso.getMetrosCuadrados() * 150000);
+        } else if (permiso instanceof EventoEspecialPermiso) {
+            EventoEspecialPermiso eventoPermiso = (EventoEspecialPermiso) permiso;
+            tarifa = permiso.getCostoBase() + (eventoPermiso.getCantidadAsistentes() / 100) * 100000;
+        }
+        return tarifa;
     }
 }
